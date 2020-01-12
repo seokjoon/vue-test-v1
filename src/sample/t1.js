@@ -9,8 +9,28 @@ var vmCompute = new Vue({
 });
 vmCompute.$mount('#compute');
 
+var vmDirective = new Vue({
+	computed: { bool: function() { return true; }, },
+	data: {
+		item: {
+			title: 'foo',
+			value: 200,
+		},
+		timer: null,
+	},
+});
+vmDirective.$mount('#directive');
+
 var vmFilter = new Vue({ filters: { filter1: (val) => { return ((!(val)) ? '0' : val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')); }, }, });
 vmFilter.$mount('#filter');
+
+var vmLifeCycle = new Vue({
+	data: { lifecycle: '' },
+	created: function() { this.timer = setInterval(function() { vmLifeCycle.$destroy(); }, 1000); },
+	mounted: function() { this.lifecycle = 'mounted'; },
+	beforeDestroy: function() { clearInterval(this.timer); console.log('beforeDestroy') },
+});
+vmLifeCycle.$mount('#lifecycle');
 
 var vmTitle = new Vue({ data: { items: [{title: 'bar'}], }, });
 vmTitle.$mount('#title'); //console.log(vm.items);

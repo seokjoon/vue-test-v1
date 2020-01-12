@@ -9,7 +9,23 @@
 <body>
 	<button id="btn" v-bind:title="title" v-bind:disabled="disable">items</button>
 	<div id="compute">{{ compute1 }}</div>
+	<div id="directive">
+		<p v-bind:class="{foo: bool, bar:!(bool)}">vBindClass</p>
+		<p v-bind:style="{color: (bool ? 'green' : 'yellow')}">vBindStyle</p>
+		<div><span v-for="v in [2, 3, 5]" v-bind:key="v">{{v}}&nbsp;</span></div>
+		<div><span v-for="(v, k) in [2, 3, 5]" v-bind:key="v">{{k}} | {{v}}&nbsp;</span></div>
+		<span v-if="bool">vIf</span><span v-show="!(bool)">vShow</span>
+		<div>
+			<div>
+				<input type="number" v-on:input="item.value = $event.target.value" v-bind:value="item.value" min="0" />
+				<input type="number" v-on:change="item.value = $event.target.value" v-bind:value="item.value" min="0" />
+				<input type="number" v-model="item.value" min="0" />
+				<input type="number" v-bind:value="item.value" readonly="true" />
+			</div>
+		</div>
+	</div>
 	<div id="filter">{{ 1000000 | filter1 }}</div>
+	<div id="lifecycle">{{ lifecycle }}</div>
 	<div id="title">{{ items[0].title }}</div>
 
 	<script src="./t1.js"></script>
