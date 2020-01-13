@@ -7,7 +7,8 @@
 </head>
 
 <body>
-	<button id="btn" v-bind:title="title" v-bind:disabled="disable">items</button>
+	<button id="button" v-bind:title="title" v-bind:disabled="disable">items</button>
+	<div id="component"> <component1></component1> <component1></component1> </div>
 	<div id="compute">{{ compute1 }}</div>
 	<div id="directive">
 		<p v-bind:class="{foo: bool, bar:!(bool)}">vBindClass</p>

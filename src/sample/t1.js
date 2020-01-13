@@ -1,33 +1,53 @@
 if(typeof Vue === 'undefined') var Vue = () => {}; // console.assert(typeof Vue !== 'undefined'); console.log(typeof Vue);
 
-var vmBtn = new Vue({ data: { title: 'btn', disable: false, }, });
-vmBtn.$mount('#btn');
+new Vue({
+	data: { title: 'button', disable: false, },
+	el: '#button',
+});
 
-var vmCompute = new Vue({
+Vue.component('component1', {
+	template: '<span><component2></component2><component3></component3></span>',
+});
+Vue.component('component2', {
+	data: function() { return { component2: 'component2', } },
+	template: '<span>{{ component2 }}</span>',
+});
+var component3 = Vue.extend({ template: '<span>component3</span>', });
+//new component3().$mount('#component3');
+Vue.component('component3', component3);
+new Vue({ el:'#component', });
+
+new Vue({
 	computed: { compute1: function() { return this.items[0] + this.items[1] }, },
 	data: { items: [ 2, 3, ], },
+	el: '#compute',
 });
-vmCompute.$mount('#compute');
 
-var vmDirective = new Vue({
+new Vue({
 	computed: { bool: function() { return true; }, },
 	data: { item: { value: 200, }, timer: null, },
+	el: '#directive',
 });
-vmDirective.$mount('#directive');
 
-var vmFilter = new Vue({ filters: { filter1: (val) => { return ((!(val)) ? '0' : val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')); }, }, });
-vmFilter.$mount('#filter');
+new Vue({
+	el: '#filter',
+	filters: { filter1: (val) => { return ((!(val)) ? '0' : val.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,')); }, },
+});
 
 var vmLifeCycle = new Vue({
-	data: { lifecycle: '' },
-	created: function() { this.timer = setInterval(function() { vmLifeCycle.$destroy(); }, 1000); },
-	mounted: function() { this.lifecycle = 'mounted'; },
 	beforeDestroy: function() { clearInterval(this.timer); console.log('beforeDestroy') },
+	created: function() { this.timer = setInterval(function() { vmLifeCycle.$destroy(); }, 1000); },
+	data: { lifecycle: '' },
+	mounted: function() { this.lifecycle = 'mounted'; },
 });
 vmLifeCycle.$mount('#lifecycle');
 
-var vmMethod = new Vue({ methods: { method1: function($e) { console.log($e.target.name); }, }, });
-vmMethod.$mount('#method');
+new Vue({
+	el: '#method',
+	methods: { method1: function($e) { console.log($e.target.name); }, },
+});
 
-var vmTitle = new Vue({ data: { items: [{title: 'bar'}], }, });
-vmTitle.$mount('#title'); //console.log(vm.items);
+new Vue({
+	data: { items: [{title: 'bar'}], },
+	el: '#title',
+});
