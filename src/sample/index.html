@@ -9,6 +9,10 @@
 <body>
 	<button id="button" v-bind:title="title" v-bind:disabled="disable">items</button>
 	<div id="component"> <component1></component1> <component1></component1> </div>
+	<div id="componentLocal"></div>
+	<div id="componentProps">
+		<component-props1 v-bind:item="item"></component-props1>
+	</div>
 	<div id="compute">{{ compute1 }}</div>
 	<div id="directive">
 		<p v-bind:class="{foo: bool, bar:!(bool)}">vBindClass</p>
@@ -30,6 +34,13 @@
 	<div id="method">
 		<button name="method1" v-on:click="method1">method1</button>
 	</div>
+
+	<div id="template">
+		<script type="text/x-template" id="templateX1"><span>templateX1</span></script>
+		<div id="templateX2"></div>
+
+	</div>
+
 	<div id="title">{{ items[0].title }}</div>
 
 	<script src="./t1.js"></script>
