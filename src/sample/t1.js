@@ -11,13 +11,7 @@ vmCompute.$mount('#compute');
 
 var vmDirective = new Vue({
 	computed: { bool: function() { return true; }, },
-	data: {
-		item: {
-			title: 'foo',
-			value: 200,
-		},
-		timer: null,
-	},
+	data: { item: { value: 200, }, timer: null, },
 });
 vmDirective.$mount('#directive');
 
@@ -31,6 +25,9 @@ var vmLifeCycle = new Vue({
 	beforeDestroy: function() { clearInterval(this.timer); console.log('beforeDestroy') },
 });
 vmLifeCycle.$mount('#lifecycle');
+
+var vmMethod = new Vue({ methods: { method1: function($e) { console.log($e.target.name); }, }, });
+vmMethod.$mount('#method');
 
 var vmTitle = new Vue({ data: { items: [{title: 'bar'}], }, });
 vmTitle.$mount('#title'); //console.log(vm.items);
