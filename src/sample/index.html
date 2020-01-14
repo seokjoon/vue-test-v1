@@ -10,9 +10,18 @@
 	<button id="button" v-bind:title="title" v-bind:disabled="disable">items</button>
 	<div id="component"> <component1></component1> <component1></component1> </div>
 	<div id="componentLocal"></div>
-	<div id="componentProps">
-		<!-- <component-props1 v-bind:item="item"></component-props1> -->
-		<component-props1 v-for="item in items" :key="item.title" :item="item"></component-props1>
+	<div id="componentPropsEvent">
+		<div v-for="item in items">
+			{{ item.title }}
+			<component-props-event-btn v-on:increment="increment()"></component-props-event-btn>
+		</div>
+	</div>
+	<div id="componentPropsPlural">
+		<!-- <component-props-singular v-bind:item="item"></component-props-singular> -->
+		<component-props-singular v-for="item in items" :key="item.title" :item="item"></component-props-singular>
+	</div>
+	<div id="componentRefParent">
+		<component-ref-child ref="foo"></component-ref-child>
 	</div>
 	<div id="compute">{{ compute1 }}</div>
 	<div id="directive">
@@ -32,16 +41,24 @@
 	</div>
 	<div id="filter">{{ 1000000 | filter1 }}</div>
 	<div id="lifecycle">{{ lifecycle }}</div>
+	<script type="text/x-template" id="login-tmpl">
+		<div>
+			<input type="text" placeholder="id" v-model="id">
+			<input type="password" placeholder="password" v-model="password">
+			<button @click="login">login</button>
+		</div>
+	</script>
+	<div id="login">
+		<login-tmpl></login-tmpl>
+	</div>
+
 	<div id="method">
 		<button name="method1" v-on:click="method1">method1</button>
 	</div>
-
 	<div id="template">
 		<script type="text/x-template" id="templateX1"><span>templateX1</span></script>
 		<div id="templateX2"></div>
-
 	</div>
-
 	<div id="title">{{ items[0].title }}</div>
 
 	<script src="./t1.js"></script>

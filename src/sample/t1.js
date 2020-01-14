@@ -32,15 +32,31 @@ new Vue({
 	el: '#compute',
 });
 
-Vue.component('componentProps1', {
+var componentPropsEventBtn = Vue.extend({
+	data: () => ({counter: 0}),
+	methods: { add: function () { this.counter += 1; this.$emit('increment'); }, },
+	template: '<span>{{ counter }} <button v-on:click="add">add</button></span>',
+});
+new Vue({
+	components: { componentPropsEventBtn: componentPropsEventBtn, },
+	data: { items: [{ title: 'foo' }, { title: 'bar' }, ], total: 0, },
+	el: '#componentPropsEvent',
+	methods: { increment: function() { this.total += 1; }, },
+});
+
+Vue.component('componentPropsSingular', {
 	//props: { item: { type: String, default: 'default', required: false, validator: () => true, }, },
 	props: { item: { type: Object, default: () => ({ id: 0, title: ''}), required: false, validator: () => true, }, },
 	template: '<span>{{ item.id }} | {{ item.title }} &nbsp;&nbsp;</span>',
 });
 new Vue({
 	data: { items: [ { id: 1, title: 'title 1', }, { id: 2, title: 'title 2' } ] },
-	el: '#componentProps',
+	el: '#componentPropsPlural',
 });
+
+Vue.component('componentRefChild', { data: () => ({title: 'componentRefChild'}), template: '<span>componentRefChild</span>', });
+var componentRefParent = new Vue({ el: '#componentRefParent' });
+var componentRefChildFoo = componentRefParent.$refs.foo; console.log(componentRefChildFoo.title);
 
 new Vue({
 	computed: { bool: function() { return true; }, },
@@ -61,6 +77,15 @@ var vmLifeCycle = new Vue({
 });
 vmLifeCycle.$mount('#lifecycle');
 
+
+Vue.component('login-tmpl', {
+	template: '#login-tmpl',
+	data: () => ({ id: '', password: '', }),
+	methods: { login: function () { console.log(this.id, this.password); } },
+});
+new Vue({ el: '#login', });
+
+
 new Vue({
 	el: '#method',
 	methods: { method1: function($e) { console.log($e.target.name); }, },
@@ -71,7 +96,6 @@ new Vue({
 	el: '#templateX2',
 	template: '<template-x1></template-x1>',
 });
-
 
 new Vue({
 	data: { items: [{title: 'bar'}], },
