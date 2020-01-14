@@ -33,11 +33,12 @@ new Vue({
 });
 
 Vue.component('componentProps1', {
-	props: { item: { type: String, default: 'default', required: false, validator: () => true, }, },
-	template: '<span>{{ item }}</span>',
+	//props: { item: { type: String, default: 'default', required: false, validator: () => true, }, },
+	props: { item: { type: Object, default: () => ({ id: 0, title: ''}), required: false, validator: () => true, }, },
+	template: '<span>{{ item.id }} | {{ item.title }} &nbsp;&nbsp;</span>',
 });
 new Vue({
-	data: { item: 'item props' },
+	data: { items: [ { id: 1, title: 'title 1', }, { id: 2, title: 'title 2' } ] },
 	el: '#componentProps',
 });
 

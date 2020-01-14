@@ -11,7 +11,8 @@
 	<div id="component"> <component1></component1> <component1></component1> </div>
 	<div id="componentLocal"></div>
 	<div id="componentProps">
-		<component-props1 v-bind:item="item"></component-props1>
+		<!-- <component-props1 v-bind:item="item"></component-props1> -->
+		<component-props1 v-for="item in items" :key="item.title" :item="item"></component-props1>
 	</div>
 	<div id="compute">{{ compute1 }}</div>
 	<div id="directive">
