@@ -10,8 +10,20 @@
 <body>
 
 	<div id="app">
-		<router-link to="/foo">foo</router-link>
-		<router-link to="/bar">bar</router-link>
+		<router-link to="/link1">link1</router-link>
+		<router-link to="/link2/2">link2</router-link>
+		<router-link :to="{ name: 'link3', params: { id: 3 } }">link3</router-link>
+		<router-link to="/link4">link4</router-link>
+		<router-link to="/link5?foo=bar">link5</router-link>
+		<router-view></router-view>
+	</div>
+
+	<hr />
+	<div id="spa">
+		<nav>
+			<router-link to="/top">top</router-link>
+			<router-link to="/users">users</router-link>
+		</nav>
 		<router-view></router-view>
 	</div>
 
