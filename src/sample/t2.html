@@ -9,7 +9,6 @@
 
 <body>
 
-
 	<div id="app">
 		<router-link to="/link1">link1</router-link>
 		<router-link to="/link2/2">link2</router-link>
@@ -25,10 +24,25 @@
 		<nav>
 			<router-link to="/top">top</router-link>
 			<router-link to="/users">users</router-link>
+			<router-link to="/users/create?redirect=true">user create</router-link>
+			<router-link to="/login" v-show="!Auth.loggedIn()">login</router-link>
+			<router-link to="/logout" v-show="Auth.loggedIn()">logout</router-link>
 		</nav>
 		<router-view></router-view>
 	</div>
 
+	<script type="text/x-template" id="spa-login">
+		<div>
+			<div>login</div>
+			<p v-if="$route.query.redirect">required login</p>
+			<form @submit.prevent="login">
+				<input v-model="email" placeholder="email" />
+				<input v-model="pw" placeholder="pw" type="password" />
+				<button type="submit">login</button>
+				<p v-if="error" class="error">login failed</p>
+			</form>
+		</div>
+	</script>
 	<script type="text/x-template" id="spa-user-create">
 		<div>
 			<div class="sending" v-if="sending">sending...</div>

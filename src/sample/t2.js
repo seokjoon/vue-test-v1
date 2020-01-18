@@ -1,6 +1,18 @@
 if(typeof Vue === 'undefined') var Vue = () => {};
 
 
+var Auth = {
+	login: function (email, pw, cb) {
+		setTimeout(function() {
+			if(email === 'a@b.c' && pw === '1111') {
+				localStorage.token = Math.random().toString(36).substring(7);
+				if(cb) cb(true);
+			} else if(cb) cb(false);
+		}, 0);
+	},
+	loggedIn: () => { return !!localStorage.token; },
+	logout: () => { delete localStorage.token; },
+};
 var getUser = function (id, cb) {
 	setTimeout(function() {
 		var filteredUsers = userData.filter(function(user) { return user.id === parseInt(id, 10); });
@@ -8,6 +20,18 @@ var getUser = function (id, cb) {
 	}, 500);
 };
 var getUsers = function(cb) { setTimeout(function() { cb(null, userData); }, 500); };
+var Login = {
+	data: () => ({ email: 'a@b.c', pw: '', error: false, }),
+	methods: {
+		login: function () {
+			Auth.login(this.email, this.pw, (function (loggedIn) {
+				if(!(loggedIn)) this.error = true;
+				else this.$router.replace(this.$route.query.redirect || '/');
+			}).bind(this));
+		},
+	},
+	template: '#spa-login',
+};
 var postUser = function(params, cb) {
 	setTimeout(function() {
 		params.id = userData.length + 1;
@@ -78,13 +102,15 @@ var UserList = {
 };
 var routerSpa = new VueRouter({
 	routes: [
+		{ path: '/login', component: Login, },
+		{ path: '/logout', beforeEnter: (to, from, next) => { Auth.logout(); next('/'); } },
 		{ path: '/top', component: { template: '<div>top</div>', }, },
 		{ path: '/users', component: UserList, },
-		{ path: '/users/create', component: UserCreate, },
+		{ path: '/users/create', component: UserCreate, beforeEnter: (to, from, next) => { if(!(Auth.loggedIn())) next({ path: '/login', query: { redirect: to.fullPath }, }); else next(); } }, //UserItem 라우트보다 먼저
 		{ path: '/users/:id', component: UserItem, }
 	],
 });
-var spa = new Vue({ router: routerSpa, });
+var spa = new Vue({ data: { Auth: Auth, }, router: routerSpa, });
 spa.$mount('#spa');
 
 
