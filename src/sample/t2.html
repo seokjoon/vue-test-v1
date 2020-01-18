@@ -33,7 +33,16 @@
 		<div>
 			<div class="loading" v-if="loading">loading...</div>
 			<div v-if="error" class="error"> {{ error }} </div>
-			<div v-for="user in users" :key="user.id"> <div>{{ user.name }}</div> </div>
+			<div v-for="user in users" :key="user.id">
+				<div>{{ user.name }}</div>
+			</div>
+		</div>
+	</script>
+	<script type="text/x-template" id="spa-user-item">
+		<div>
+			<div class="loading" v-if="loading">loading...</div>
+			<div v-if="error" class="error"> {{ error }} </div>
+			<div v-if="user"> <div>{{ user.name }} | {{ user.desc }}</div> </div>
 		</div>
 	</script>
 
