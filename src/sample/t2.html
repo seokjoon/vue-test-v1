@@ -29,13 +29,13 @@
 		<router-view></router-view>
 	</div>
 
-	<script type="text/x-template" id="spa-user-list">
+	<script type="text/x-template" id="spa-user-create">
 		<div>
-			<div class="loading" v-if="loading">loading...</div>
-			<div v-if="error" class="error"> {{ error }} </div>
-			<div v-for="user in users" :key="user.id">
-				<div>{{ user.name }}</div>
-			</div>
+			<div class="sending" v-if="sending">sending...</div>
+			<div><input type="text" v-model="user.name" /></div>
+			<div><textarea v-model="user.desc"></textarea></div>
+			<div v-if="error" class="error">{{ error }}</div>
+			<div><input type="button" @click="createUser" value="등록" /></div>
 		</div>
 	</script>
 	<script type="text/x-template" id="spa-user-item">
@@ -45,7 +45,15 @@
 			<div v-if="user"> <div>{{ user.name }} | {{ user.desc }}</div> </div>
 		</div>
 	</script>
-
+	<script type="text/x-template" id="spa-user-list">
+		<div>
+			<div class="loading" v-if="loading">loading...</div>
+			<div v-if="error" class="error"> {{ error }} </div>
+			<div v-for="user in users" :key="user.id">
+				<div>{{ user.name }}</div>
+			</div>
+		</div>
+	</script>
 
 	<script src="./t2.js"></script>
 </body>

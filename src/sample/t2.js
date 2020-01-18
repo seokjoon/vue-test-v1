@@ -1,13 +1,49 @@
 if(typeof Vue === 'undefined') var Vue = () => {};
 
 
-var userData = [ { id: 1, name: 'foo', desc: 'foo desc', }, { id: 2, name: 'bar', desc: 'bar desc', } ];
 var getUser = function (id, cb) {
 	setTimeout(function() {
 		var filteredUsers = userData.filter(function(user) { return user.id === parseInt(id, 10); });
 		cb(null, filteredUsers && filteredUsers[0]);
 	}, 500);
 };
+var getUsers = function(cb) { setTimeout(function() { cb(null, userData); }, 500); };
+var postUser = function(params, cb) {
+	setTimeout(function() {
+		params.id = userData.length + 1;
+		userData.push(params);
+		cb(null, params);
+	}, 500);
+};
+var UserCreate = {
+	created: () => {},
+	data: function () {
+		return {
+			error: null,
+			sending: false,
+			user: this.defaultUser(),
+		};
+	},
+	methods: {
+		createUser: function() {
+			if(this.user.name.trim() === '') { this.error = 'required name'; return; }
+			if(this.user.desc.trim() === '') { this.error = 'required desc'; return; }
+			postUser(this.user, (function(err, user) {
+				this.sending = false;
+				if(err) this.error = err.toString();
+				else {
+					this.error = null;
+					this.user = this.defaultUser();
+					alert('add user');
+					this.$router.push('/users');
+				}
+			}).bind(this));
+		},
+		defaultUser: () => ({ name: '', desc: '', }),
+	},
+	template: '#spa-user-create',
+};
+var userData = [ { id: 1, name: 'foo', desc: 'foo desc', }, { id: 2, name: 'bar', desc: 'bar desc', } ];
 var UserItem = {
 	created: function() { this.fetchData(); },
 	data: () => ({ loading: false, user: null, error: null }),
@@ -24,7 +60,6 @@ var UserItem = {
 	template: '#spa-user-item',
 	watch: { '$route': 'fetchData', },
 };
-var getUsers = function(cb) { setTimeout(function() { cb(null, userData); }, 500); };
 var UserList = {
 	created: function() { this.fetchData(); },
 	data: function() { return { loading: false, users: () => [], error: null, }; },
@@ -44,9 +79,8 @@ var UserList = {
 var routerSpa = new VueRouter({
 	routes: [
 		{ path: '/top', component: { template: '<div>top</div>', }, },
-		//{ path: '/users', component: { template: '<span><user-list></user-list></span>', }, },
 		{ path: '/users', component: UserList, },
-		//{ path: '/users/:id', component: '<span><user-item></user-item></span>', }
+		{ path: '/users/create', component: UserCreate, },
 		{ path: '/users/:id', component: UserItem, }
 	],
 });
