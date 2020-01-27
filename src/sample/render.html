@@ -1,0 +1,28 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="./dark.css" rel="stylesheet">
+	<script src="https://unpkg.com/vue@2.5.17"></script>
+	<script src="https://unpkg.com/vue-router@3.0.1"></script>
+</head>
+
+<body>
+
+	<template>
+		<div id="render">
+			<render-jsx></render-jsx>
+		</div>
+	</template>
+	<script>
+	import RenderJsx from './render';
+	export default {
+		name: 'render',
+		components: {
+			RenderJsx: RenderJsx,
+		},
+	};
+	</script>
+</body>
+
+</html>
