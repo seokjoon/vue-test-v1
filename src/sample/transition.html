@@ -1,0 +1,43 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="./dark.css" rel="stylesheet">
+	<script src="https://unpkg.com/vue@2.5.17"></script>
+	<script src="https://unpkg.com/vue-router@3.0.1"></script>
+</head>
+
+<body>
+
+	<div id="transition">
+		<transition>
+			<p v-show="isShown">transition</p>
+		</transition>
+		<button @click="isShown = !(isShown)">transition</button>
+	</div>
+
+	<script src="./transition.js"></script>
+</body>
+
+<style>
+	.v-enter-active,
+	.v-leave-active {
+		transition: opacity 500ms ease-out;
+	}
+	.v-enter {
+		opacity: 0;
+	}
+	.v-enter-to {
+		opacity: 1;
+	}
+	.v-leave {
+		opacity: 1;
+	}
+	.v-leave-to {
+		opacity: 0;
+	}
+
+
+</style>
+
+</html>

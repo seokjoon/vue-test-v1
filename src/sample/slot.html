@@ -1,0 +1,27 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link href="./dark.css" rel="stylesheet">
+	<script src="https://unpkg.com/vue@2.5.17"></script>
+	<script src="https://unpkg.com/vue-router@3.0.1"></script>
+</head>
+
+<body>
+
+	<div id="slot">
+		<button-slot-single>send</button-slot-single>
+		<button-slot-single></button-slot-single>
+
+		<button-slot-plural>
+			<h1 slot="header">header foo</h1>
+			<p>desc foo</p>
+			<p slot="footer">footer foo</p>
+		</button-slot-plural>
+	</div>
+
+	<script src="slot.js"></script>
+
+</body>
+
+</html>
