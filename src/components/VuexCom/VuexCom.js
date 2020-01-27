@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import VuexComTmpl from './VuexCom.vue';
+import VuexComTmpl from './VuexComTmpl.vue';
 
 Vue.use(Vuex);
 
